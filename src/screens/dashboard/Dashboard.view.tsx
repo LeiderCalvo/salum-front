@@ -2,12 +2,15 @@ import { Container, Icon, Table } from "@chakra-ui/react"
 import { Button } from "@/components/ui/button"
 import { HiBadgeCheck, HiXCircle, HiFire, HiTrash, HiPencil } from "react-icons/hi"
 import { Tag } from "@/components/ui/tag"
+import { useNavigate } from "react-router"
 
 interface DashboardViewProps {
     profiles: any[]
 }
 
 export const DashboardView = ({ profiles }: DashboardViewProps) => {
+    const navigate = useNavigate();
+
     const getFullName = (profile) => {
         const { first_name, second_name } = profile
 
@@ -43,6 +46,10 @@ export const DashboardView = ({ profiles }: DashboardViewProps) => {
     const rows = profiles.map((item, index) => (
         <Table.Row
             key={item.id}
+            onClick={() => {
+                navigate("/profile-detail", {state: { user: item} })
+            }
+            }
         >
             <Table.Cell >{index}</Table.Cell>
             <Table.Cell >{getFullName(item)}</Table.Cell>
