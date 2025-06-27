@@ -47,7 +47,7 @@ export const DashboardView = ({ profiles }: DashboardViewProps) => {
         <Table.Row
             key={item.id}
             onClick={() => {
-                navigate("/profile-detail", {state: { user: item} })
+                navigate("/profile-detail", { state: { user: item } })
             }
             }
         >
@@ -55,28 +55,31 @@ export const DashboardView = ({ profiles }: DashboardViewProps) => {
             <Table.Cell >{getFullName(item)}</Table.Cell>
             <Table.Cell >{getFullLastName(item)}</Table.Cell>
             <Table.Cell textAlign='center'>{getGenderTag(item)}</Table.Cell>
-            {/* <Table.Cell textAlign='center'>
+            <Table.Cell textAlign='center'>
                 <Tag size="sm" colorPalette={"green"}>
                     {item.status}
                 </Tag>
             </Table.Cell>
-            <Table.Cell textAlign='center'>{getCheckOrCrossIcon(item.baptism_date)}</Table.Cell> */}
+            {/* <Table.Cell textAlign='center'>{getCheckOrCrossIcon(item.baptism_date)}</Table.Cell> */}
             <Table.Cell textAlign='center'>{getPromisedIcon(item)}</Table.Cell>
             <Table.Cell >
                 <Button variant="subtle" size="xs" disabled>
                     <HiPencil />
                 </Button>
             </Table.Cell>
-            <Table.Cell>
+            {/* <Table.Cell>
                 <Button variant="subtle" size="xs" disabled>
                     <HiTrash />
                 </Button>
-            </Table.Cell>
+            </Table.Cell> */}
         </Table.Row>
     ))
 
     return (
         <Container centerContent fluid>
+            <Button onClick={() => navigate("/form")}>
+                Go To Form
+            </Button>
             <Table.Root stickyHeader interactive>
                 <Table.Header>
                     <Table.Row>
@@ -84,10 +87,9 @@ export const DashboardView = ({ profiles }: DashboardViewProps) => {
                         <Table.ColumnHeader>Nombres</Table.ColumnHeader>
                         <Table.ColumnHeader>Apellidos</Table.ColumnHeader>
                         <Table.ColumnHeader>Genero</Table.ColumnHeader>
-                        {/* <Table.ColumnHeader>Estado</Table.ColumnHeader>
-                        <Table.ColumnHeader>Bautizado</Table.ColumnHeader> */}
+                        <Table.ColumnHeader>Estado</Table.ColumnHeader>
+                        {/* <Table.ColumnHeader>Bautizado</Table.ColumnHeader> */}
                         <Table.ColumnHeader>ES</Table.ColumnHeader>
-                        <Table.ColumnHeader></Table.ColumnHeader>
                         <Table.ColumnHeader></Table.ColumnHeader>
                     </Table.Row>
                 </Table.Header>

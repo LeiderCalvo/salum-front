@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -8,11 +8,13 @@ import ProfileService from "../../services/profiles/profiles"
 import FormView from "./Form.view";
 
 const Form = () => {
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    reset
   } = useForm<Profile>({
     // resolver: zodResolver(ProfileSchema),
     resolver: async (data, context, options) => {
@@ -37,12 +39,18 @@ const Form = () => {
     return occupationType && occupationType !== "nothing"
   }, [occupationType])
 
-  const onSubmit: SubmitHandler<Profile> = (data) => {
+  const onSubmit: SubmitHandler<Profile> = async (data) => {
     console.log("Form submitted successfully:", data);
-    ProfileService.post(data)
+    setLoading(true)
+    await ProfileService.post(data)
+    alert("usuario agregado")
+    setLoading(false)
+    reset()
+    localStorage.clear() // to refresh dashboard list
   };
 
   return <FormView
+    loading={loading}
     onSubmit={handleSubmit(onSubmit)}
     register={register}
     errors={errors}

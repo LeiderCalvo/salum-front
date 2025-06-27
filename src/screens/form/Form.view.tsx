@@ -1,13 +1,16 @@
 import {
     Badge,
+    Box,
     Container,
     Fieldset,
+    Flex,
     HStack,
     Input,
+    Spinner,
     Stack,
     Textarea,
 } from "@chakra-ui/react";
-import { HiUpload } from "react-icons/hi";
+import { HiBackspace, HiUpload } from "react-icons/hi";
 
 import {
     NativeSelectField,
@@ -22,6 +25,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Profile } from "@/schemas/profiles";
+import { useNavigate } from "react-router";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 const OPTIONAL = (
     <Badge size="xs" variant="surface">
@@ -36,11 +41,20 @@ interface FormViewProps {
     errors: FieldErrors<Profile>;
     allowOccupationSection: boolean;
     allowBaptizeSection: boolean;
+    loading: boolean
 }
 
-const FormView = ({ onSubmit, register, errors, allowOccupationSection, allowBaptizeSection }: FormViewProps) => {
+const FormView = ({ onSubmit, register, errors, allowOccupationSection, allowBaptizeSection, loading }: FormViewProps) => {
+    const navigate = useNavigate()
+
     return (
         <Container fluid centerContent>
+            <Button onClick={() => navigate("/")}>
+                <HiBackspace />
+            </Button>
+
+            {loading && <FullScreenLoader />}
+
             <form
                 noValidate
                 onSubmit={onSubmit}
@@ -509,7 +523,7 @@ const FormView = ({ onSubmit, register, errors, allowOccupationSection, allowBap
                         </HStack>
                     </Fieldset.Content>
 
-                    <Button type="submit" alignSelf="flex-start">
+                    <Button type="submit" alignSelf="flex-start" disabled={loading}>
                         <input type="submit" />
                     </Button>
 
@@ -520,3 +534,26 @@ const FormView = ({ onSubmit, register, errors, allowOccupationSection, allowBap
 }
 
 export default FormView;
+
+
+const FullScreenLoader: React.FC = () => {
+    const bg = useColorModeValue("whiteAlpha.800", "blackAlpha.800");
+
+    return (
+        <Flex
+            position="fixed"
+            top="0"
+            left="0"
+            width="100vw"
+            height="100vh"
+            bg={bg}
+            align="center"
+            justify="center"
+            zIndex="9999"
+        >
+            <Box textAlign="center">
+                <Spinner size="xl" thickness="4px" color="blue.500" />
+            </Box>
+        </Flex>
+    );
+};
