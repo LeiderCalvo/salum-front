@@ -1,8 +1,9 @@
-import { Container, Icon, Table } from "@chakra-ui/react"
+import { AvatarFallback, AvatarImage, AvatarRoot, Container, Icon, Table } from "@chakra-ui/react"
 import { Button } from "@/components/ui/button"
 import { HiBadgeCheck, HiXCircle, HiFire, HiTrash, HiPencil } from "react-icons/hi"
 import { Tag } from "@/components/ui/tag"
 import { useNavigate } from "react-router"
+import { Avatar } from "@/components/ui/avatar"
 
 interface DashboardViewProps {
     profiles: any[]
@@ -52,6 +53,14 @@ export const DashboardView = ({ profiles }: DashboardViewProps) => {
             }
         >
             <Table.Cell >{index}</Table.Cell>
+            <Table.Cell >
+                <AvatarRoot>
+                    <AvatarFallback>
+                        <Avatar size="xl" name={item.first_name}  />
+                    </AvatarFallback>
+                    <AvatarImage src={`https://ctmkrhcfysnaufjwxriu.supabase.co/storage/v1/object/public/profile.avatars//${item.id}.png`} />
+                </AvatarRoot>
+            </Table.Cell>
             <Table.Cell >{getFullName(item)}</Table.Cell>
             <Table.Cell >{getFullLastName(item)}</Table.Cell>
             <Table.Cell textAlign='center'>{getGenderTag(item)}</Table.Cell>
@@ -83,6 +92,7 @@ export const DashboardView = ({ profiles }: DashboardViewProps) => {
             <Table.Root stickyHeader interactive>
                 <Table.Header>
                     <Table.Row>
+                        <Table.ColumnHeader></Table.ColumnHeader>
                         <Table.ColumnHeader></Table.ColumnHeader>
                         <Table.ColumnHeader>Nombres</Table.ColumnHeader>
                         <Table.ColumnHeader>Apellidos</Table.ColumnHeader>

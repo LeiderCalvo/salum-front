@@ -30,7 +30,7 @@ export const ProfileDetail: React.FC = () => {
         {/* Profile Image and Basic Info */}
         <GridItem>
           <Stack spacing={4} align="center">
-            <Avatar size="2xl" name={user.first_name} src={user.avatar ?? undefined} />
+            <img src={`https://ctmkrhcfysnaufjwxriu.supabase.co/storage/v1/object/public/profile.avatars//${user.id}.png`} />
             <Text color="gray.500" fontSize="sm">
               {user.status.toUpperCase()}
             </Text>
